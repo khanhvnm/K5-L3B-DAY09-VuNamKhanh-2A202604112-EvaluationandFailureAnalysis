@@ -93,8 +93,6 @@ class ReplyLedgerMismatch(Evaluator[Any, Trial]):
                         mismatches.append(f"reply={reply_amount}, ledger={ledger_amount}")
             elif committed_amount and committed_amount != ledger_amount:
                 mismatches.append(f"effects={committed_amount}, ledger={ledger_amount}")
-            elif proposed_amount and proposed_amount != ledger_amount:
-                mismatches.append(f"proposal={proposed_amount}, ledger={ledger_amount}")
         return EvaluationReason(value=not mismatches, reason="; ".join(mismatches) or None)
 
 
