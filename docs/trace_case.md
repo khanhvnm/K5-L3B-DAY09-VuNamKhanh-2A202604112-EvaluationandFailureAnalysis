@@ -14,14 +14,14 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `<shape> <claim>@<seed>`, run ID trong report |
-| Triệu chứng | Grader nào fail; reply nói gì so với ledger ghi gì |
-| Bước sai đầu tiên | Số thứ tự event + kind + trích payload (≤1 dòng) |
-| Vì sao là bước *đầu tiên* | Các bước trước đó đúng ra sao (dẫn số event) |
-| Failure mode | Mã FM-xx trong `docs/failure_taxonomy.md` |
-| Đối chứng | Cùng claim@seed trên shape `fixed`: bước đó khác thế nào |
-| Regression test | Tên test + grader/assert nào bắt được; đã thấy fail trên variant lỗi và pass trên `fixed` chưa |
-| Chưa chắc chắn | Điều trace không chứng minh được |
+| Trial | `seeded_regression C-002@55`, run ID `E-seeded_regression-20261118-1454` |
+| Triệu chứng | Lab 8 grader fail (`status resolved != denied`) và ledger ghi refund 20.000đ trong khi nhãn yêu cầu 0đ |
+| Bước sai đầu tiên | Event 3, kind `model_override`, payload `{"delay_days": 5}`: ghi đè `delay_days=2` trong DB bằng ticket |
+| Vì sao là bước *đầu tiên* | Event 1 `handoff` và event 2 `investigator` đã giữ dữ liệu DB hợp lệ; chỉ event 3 mới thay đổi độ trễ trước quote |
+| Failure mode | FM-03 `ticket_trust — tin ticket hơn DB` |
+| Đối chứng | `fixed C-002@55` không có `model_override`; quote là 0đ, ledger 0đ, status `denied`, Lab 8 grader PASS |
+| Regression test | `test_override_event_breaks_db_fact` kiểm tra `DbFactKept`; seeded/regression tạo event sai còn fixed không tạo event |
+| Chưa chắc chắn | Trace không chứng minh nguyên nhân ticket được parse sai ở mọi seed; nhưng seed 55 tái hiện rõ lỗi ghi đè DB |
 
 ## Quy tắc
 
