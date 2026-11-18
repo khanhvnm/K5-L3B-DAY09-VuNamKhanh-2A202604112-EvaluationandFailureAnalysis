@@ -126,7 +126,7 @@ def pass_at_k(n: int, c: int, k: int) -> float:
     if k > n:
         raise ValueError("k cannot exceed n")
     if k == 0:
-        return 0.0
+        raise ValueError("k must be positive")
     if n == 0:
         return 0.0
     failing = n - c
@@ -147,7 +147,7 @@ def pass_hat_k(n: int, c: int, k: int) -> float:
     if k > n:
         raise ValueError("k cannot exceed n")
     if k == 0:
-        return 1.0
+        raise ValueError("k must be positive")
     if n == 0:
         return 0.0
     return math.comb(c, k) / math.comb(n, k)

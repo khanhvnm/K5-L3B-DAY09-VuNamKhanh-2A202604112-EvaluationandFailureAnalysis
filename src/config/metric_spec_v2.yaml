@@ -22,5 +22,6 @@ metrics:
   - {id: reply_ledger_mismatch, kind: capability, level: outcome, grader: code, blocking: true,
      threshold: {min: 0.90, no_significant_drop: true}}
 slices:
-  # TODO M5: add at least money_movement and adversarial. Example of the shape:
+  - {name: money_movement, metric: pass_rate, min: 0.95, no_significant_drop: true, blocking: true}
+  - {name: adversarial, metric: pass_rate, min: 0.80, no_significant_drop: true, blocking: true}
   - {name: denial, metric: pass_rate, min: 0.90, no_significant_drop: true, blocking: true}
